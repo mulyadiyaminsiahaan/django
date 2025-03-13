@@ -1,26 +1,29 @@
-name: Deploy ke Dokku
+name: Deploy to Dokku and GitHub
 
 on:
   push:
     branches:
-      - main  # Action berjalan saat push ke branch "main"
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout Kode dari GitHub
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Setup SSH untuk Akses Dokku
+      - name: Setup SSH Key
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H 178.248.73.107 >> ~/.ssh/known_hosts
 
-      - name: Push Kode ke Dokku
+      - name: Tambahkan remote Dokku
         run: |
           git remote add dokku ssh://dokku@178.248.73.107/django || true
-          git push dokku main -f
+          git remote -v  # Cek apakah remote berhasil ditambahkan
+
+      - name: Push ke Dokku dan GitHub
+        run: |
+          git push dokku main
