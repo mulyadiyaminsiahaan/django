@@ -20,4 +20,4 @@ jobs:
           ssh-keyscan -H 178.248.73.107 >> ~/.ssh/known_hosts
 
       - name: Push ke Dokku
-        run: git push ssh://dev@178.248.73.107/django main
+        run: git push dokku main
