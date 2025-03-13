@@ -1,26 +1,21 @@
-name: Deploy to Dokku
+name: 'Deploy to Dokku'
 
 on:
   push:
     branches:
-      - main  # Akan dijalankan saat push ke branch 'main'
+      - main
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest  # Menggunakan runner Ubuntu
-
+    runs-on: ubuntu-24.04
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3  # Mengambil kode dari repo
-
-      - name: Setup SSH Key
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.DOKKU_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan 178.248.73.107 >> ~/.ssh/known_hosts
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - name: Push to Dokku
-        run: |
-          git remote add dokku dokku@178.248.73.107:django || true
-          git push dokku main
+        uses: dokku/github-action@master
+        with:
+          git_remote_url: 'ssh://dokku@178.248.73.107:22/django'
+          ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
