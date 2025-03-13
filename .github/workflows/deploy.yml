@@ -1,23 +1,26 @@
-name: Auto Push to Dokku and GitHub
+name: Deploy ke Dokku
 
 on:
   push:
     branches:
-      - main  # Jalan saat ada push ke "main"
+      - main  # Action berjalan saat push ke branch "main"
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout kode dari GitHub
+      - name: Checkout Kode dari GitHub
         uses: actions/checkout@v3
 
-      - name: Setup SSH Key
+      - name: Setup SSH untuk Akses Dokku
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H 178.248.73.107 >> ~/.ssh/known_hosts
 
-      - name: Push ke Dokku
-        run: git push dokku main
+      - name: Push Kode ke Dokku
+        run: |
+          git remote add dokku ssh://dokku@178.248.73.107/django || true
+          git push dokku main -f
