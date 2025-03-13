@@ -7,7 +7,8 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest  # Gunakan versi terbaru agar lebih stabil
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -17,5 +18,6 @@ jobs:
       - name: Push to Dokku
         uses: dokku/github-action@master
         with:
-          git_remote_url: 'ssh://dev@178.248.73.107:22/django'
+          git_remote_url: 'dokku@178.248.73.107:django'  # Perbaiki format remote URL
           ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
+          branch: "main"  # Pastikan branch yang dipush adalah main
