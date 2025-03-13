@@ -1,21 +1,16 @@
-name: 'Deploy to Dokku'
+name: Contoh GitHub Actions
 
 on:
   push:
     branches:
-      - main
+      - main  # Akan jalan setiap kali push ke branch "main"
 
 jobs:
-  deploy:
-    runs-on: ubuntu-24.04
+  contoh-pekerjaan:
+    runs-on: ubuntu-latest  # Pakai sistem operasi Ubuntu terbaru
     steps:
-      - name: Checkout repository
+      - name: Checkout kode dari GitHub
         uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
 
-      - name: Push to Dokku
-        uses: dokku/github-action@master
-        with:
-          git_remote_url: 'ssh://dokku@178.248.73.107:22/django'
-          ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
+      - name: Jalankan perintah sederhana
+        run: echo "Halo, ini GitHub Actions pertama saya!"
