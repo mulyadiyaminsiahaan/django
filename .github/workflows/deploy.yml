@@ -23,6 +23,7 @@ jobs:
         run: |
           git remote remove dokku || true
           git remote add dokku dokku@178.248.73.107:django
+          git push dokku main
           git remote -v 
 
       - name: Push ke Dokku dan GitHub
