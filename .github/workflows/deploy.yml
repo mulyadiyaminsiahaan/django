@@ -30,5 +30,4 @@ jobs:
 
       - name: Push ke Dokku dan GitHub
         run: |
-          git pull
-          git push dokku main
+          git push dokku main --force
