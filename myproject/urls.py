@@ -26,6 +26,9 @@ def hello_world(request):
                     Hello All, Ni Hao Ma, Horas, Gracias, Kak dela? Welcome to Dimensi Kreasi Nusantara!!!
                         Test
                 </p>
+                <p style="font-size:20px; color:red;">
+                    ALMOND CHOCOLATE!!!
+                </p>
             </body>
         </html>
     """)
